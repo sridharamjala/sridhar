@@ -1,0 +1,20 @@
+#!/bin/bash
+cd /home/webadmin/bonus_close/
+count=`ls | wc -l`
+if [ $count -gt 0 ]
+then
+outfile=/home/webadmin/bonus_stats.txt
+mv /home/webadmin/bonus_close/*.html /opt/tomcat/webapps/Ace2Three
+#cp /home/webadmin/bonus_close/promotionsleftmenu.js /opt/tomcat/webapps/Ace2Three/Scripts
+yesterDate=`date -d "-1 day" +%Y-%m-%d`
+echo "to: web@headinfotech.com crm@headinfotech.com" >> $outfile
+#echo "to: sridhar.a@headinfotech.com" >> $outfile
+echo "from:  alert@ace2three.com" >> $outfile
+echo "Subject: NOVSET2017 bonus has been closed in live" >> $outfile
+echo "" >> $outfile
+echo "Note - This is an auto-generated email, sent on Bonus completion. please dont replay directly to this email." >> $outfile
+echo " " >> $outfile
+cat $outfile | /usr/sbin/sendmail -t
+rm /home/webadmin/bonus_stats.txt
+exit 0
+fi
